@@ -1,0 +1,106 @@
+# yamllint disable rule:line-length
+---
+pool:
+  vmImage: 'ubuntu-20.04'
+
+stages:
+  - stage: Build
+    jobs:
+      - job: gcc_make
+        steps:
+          - script: |
+              mkdir build
+              cd build
+              wget https://developer.arm.com/-/media/Files/downloads/gnu-rm/8-2019q3/RC1.1/gcc-arm-none-eabi-8-2019-q3-update-linux.tar.bz2
+              tar xjf gcc-arm-none-eabi-8-2019-q3-update-linux.tar.bz2
+            displayName: Install gcc
+          - script: |
+              export GCC_PATH=$(pwd)/build/gcc-arm-none-eabi-8-2019-q3-update/bin
+              cd projects/GCC/
+              make
+            displayName: Build project with Make
+      - job: gcc_scons
+        steps:
+          - task: UsePythonVersion@0
+            displayName: Select python version 3.7
+            inputs:
+              versionSpec: '3.7'
+          - script: |
+              python -m pip install --upgrade pip
+              pip install -r requirements.txt
+            displayName: Install python dependencies
+          - script: |
+              mkdir build
+              cd build
+              wget https://developer.arm.com/-/media/Files/downloads/gnu-rm/8-2019q3/RC1.1/gcc-arm-none-eabi-8-2019-q3-update-linux.tar.bz2
+              tar xjf gcc-arm-none-eabi-8-2019-q3-update-linux.tar.bz2
+            displayName: Install gcc
+          - script: |
+              export PATH=$PATH:$(pwd)/build/gcc-arm-none-eabi-8-2019-q3-update/bin
+              echo $PATH
+              scons build --all -j8
+            displayName: Build project with SCons
+      - job: doxygen
+        steps:
+          - script: sudo apt-get install doxygen
+            displayName: Install doxygen
+          - script: doxygen docs/Doxyfile
+            displayName: Run doxygen
+          - script: cp -r --parents docs/img docs/html
+            displayName: Copy additional images to html folder
+          - publish: $(System.DefaultWorkingDirectory)/docs/html
+            artifact: doxygen-html
+            displayName: Upload artifact
+
+  - stage: Test
+    jobs:
+      - job: format_check
+        steps:
+          - task: UsePythonVersion@0
+            displayName: Select python version 3.7
+            inputs:
+              versionSpec: '3.7'
+          - script: |
+              sudo apt-get install clang-format-11 -f
+              clang-format-11 --version
+            displayName: Install clang tools
+          - script: |
+              python -m pip install --upgrade pip
+              pip install -r requirements.txt
+            displayName: Install python dependencies
+          - script: flake8
+            displayName: Run flake8
+          - script: yamllint .
+            displayName: Run yamllint
+          - script: python -m pytest -s --executable=clang-format-11
+            displayName: Run pytest
+
+  - stage: Deploy
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+    jobs:
+      - job: github_pages
+        steps:
+          - checkout: none
+          - download: current
+            artifact: doxygen-html
+          - script: |
+              cp -r $(Pipeline.Workspace)/doxygen-html/* .
+              ls -al
+            displayName: Copy artifact contents
+          - script: |
+              git init
+              git config --local user.name "Akos Pasztor"
+              git config --local user.email "akospasztor@users.noreply.github.com"
+            displayName: Git setup
+          - script: |
+              if [ -z "$(git status --porcelain)" ]
+              then
+                echo "Nothing to commit."
+                exit 1
+              fi
+            displayName: Git check
+          - script: |
+              git add .
+              git commit -m 'Deploy to GitHub Pages'
+              git push --force https://akospasztor:$(gh_pat)@github.com/akospasztor/stm32-rtc-scheduler.git master:gh-pages
+            displayName: Git push
