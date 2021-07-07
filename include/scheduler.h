@@ -59,11 +59,11 @@ typedef struct
 } Scheduler_t;
 
 /* Functions -----------------------------------------------------------------*/
-void    SchedulerInit(void);
+void SchedulerInit(void);
 uint8_t SchedulerAddJob(const uint32_t period, const Callback_t callback);
-void    SchedulerProcess(void);
-void    SchedulerExecutePendingJobs(void);
-void    SchedulerStop(void);
+void SchedulerProcess(void);
+void SchedulerExecutePendingJobs(void);
+void SchedulerStop(void);
 
 #ifdef __cplusplus
 }

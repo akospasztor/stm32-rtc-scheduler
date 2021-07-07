@@ -39,7 +39,7 @@ void JobShortPeriodCallback(void);
 void JobLongPeriodCallback(void);
 
 /* External functions --------------------------------------------------------*/
-extern TickType_t  GetExpectedIdleTime(void);
+extern TickType_t GetExpectedIdleTime(void);
 extern UBaseType_t IsDelayedTaskListEmpty(void);
 
 /**

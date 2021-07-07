@@ -24,9 +24,9 @@
  */
 void SystemClockConfig(void)
 {
-    RCC_OscInitTypeDef       RCC_OscInitStruct = {0U};
-    RCC_ClkInitTypeDef       RCC_ClkInitStruct = {0U};
-    RCC_PeriphCLKInitTypeDef PeriphClkInit     = {0U};
+    RCC_OscInitTypeDef RCC_OscInitStruct   = {0U};
+    RCC_ClkInitTypeDef RCC_ClkInitStruct   = {0U};
+    RCC_PeriphCLKInitTypeDef PeriphClkInit = {0U};
 
     __HAL_RCC_SYSCFG_CLK_ENABLE();
     __HAL_RCC_PWR_CLK_ENABLE();

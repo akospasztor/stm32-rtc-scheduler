@@ -85,8 +85,8 @@ uint32_t RtcGetEpoch(void)
 {
     RTC_DateTypeDef date;
     RTC_TimeTypeDef time;
-    struct tm       dateTime;
-    static time_t   epoch;
+    struct tm dateTime;
+    static time_t epoch;
 
     HAL_RTC_GetTime(&hrtc, &time, RTC_FORMAT_BIN);
     HAL_RTC_GetDate(&hrtc, &date, RTC_FORMAT_BIN);
@@ -117,14 +117,14 @@ uint32_t RtcGetEpoch(void)
  * @param time   Pointer to a RTC time structure where the converted values are
  *               written.
  */
-void RtcConvertEpochToDatetime(uint32_t         epoch,
+void RtcConvertEpochToDatetime(uint32_t epoch,
                                RTC_DateTypeDef* date,
                                RTC_TimeTypeDef* time)
 {
     assert_param(date != NULL);
     assert_param(time != NULL);
 
-    time_t    rawTime  = (time_t)epoch;
+    time_t rawTime     = (time_t)epoch;
     struct tm dateTime = *localtime(&rawTime);
 
     date->Year  = dateTime.tm_year - 100U;
@@ -148,10 +148,10 @@ void RtcConvertEpochToDatetime(uint32_t         epoch,
  */
 uint8_t RtcSetAlarmFromEpoch(const uint32_t epoch)
 {
-    static RTC_DateTypeDef  date   = {0U};
-    static RTC_TimeTypeDef  time   = {0U};
+    static RTC_DateTypeDef date    = {0U};
+    static RTC_TimeTypeDef time    = {0U};
     static RTC_AlarmTypeDef sAlarm = {0U};
-    uint8_t                 result = 0U;
+    uint8_t result                 = 0U;
 
     /* Allow alarms to be set only in the future */
     if(epoch > RtcGetEpoch())
