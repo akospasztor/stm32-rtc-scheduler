@@ -45,7 +45,7 @@ stages:
             displayName: Run flake8
           - script: yamllint .
             displayName: Run yamllint
-          - script: python -m pytest -s --executable=clang-format-11
+          - script: pytest -s --executable=clang-format-11
             displayName: Run pytest
 
   - stage: Deploy
