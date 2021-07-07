@@ -5,7 +5,7 @@ AccessModifierOffset: -2
 AlignAfterOpenBracket: Align
 AlignConsecutiveAssignments: true
 AlignConsecutiveBitFields: true
-AlignConsecutiveDeclarations: true
+AlignConsecutiveDeclarations: false
 AlignConsecutiveMacros: true
 AlignEscapedNewlines: Left
 AlignOperands: Align
@@ -109,7 +109,7 @@ PenaltyBreakFirstLessLess: 120
 PenaltyBreakString: 1000
 PenaltyBreakTemplateDeclaration: 10
 PenaltyExcessCharacter: 1000000
-PenaltyReturnTypeOnItsOwnLine: 60
+PenaltyReturnTypeOnItsOwnLine: 200
 PointerAlignment: Left
 ReflowComments: true
 SortIncludes: true
@@ -126,7 +126,7 @@ SpaceBeforeRangeBasedForLoopColon: false
 SpaceBeforeSquareBrackets: false
 SpaceInEmptyBlock: false
 SpaceInEmptyParentheses: false
-SpacesBeforeTrailingComments: 4
+SpacesBeforeTrailingComments: 2
 SpacesInAngles: false
 SpacesInConditionalStatement: false
 SpacesInContainerLiterals: false

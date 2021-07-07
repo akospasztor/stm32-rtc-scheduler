@@ -22,14 +22,14 @@ extern "C" {
 #include "stm32l4xx_hal.h"
 
 /* Functions -----------------------------------------------------------------*/
-void     RtcInit(void);
+void RtcInit(void);
 uint32_t RtcGetEpoch(void);
-void     RtcConvertEpochToDatetime(uint32_t         epoch,
-                                   RTC_DateTypeDef* date,
-                                   RTC_TimeTypeDef* time);
-uint8_t  RtcSetAlarmFromEpoch(const uint32_t epoch);
-void     RtcDeactivateAlarm(void);
-void     RtcWaitForClockSynchronization(void);
+void RtcConvertEpochToDatetime(uint32_t epoch,
+                               RTC_DateTypeDef* date,
+                               RTC_TimeTypeDef* time);
+uint8_t RtcSetAlarmFromEpoch(const uint32_t epoch);
+void RtcDeactivateAlarm(void);
+void RtcWaitForClockSynchronization(void);
 
 #ifdef __cplusplus
 }

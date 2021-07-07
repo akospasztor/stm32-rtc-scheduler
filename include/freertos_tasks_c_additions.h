@@ -26,7 +26,7 @@ extern "C" {
  */
 TickType_t GetExpectedIdleTime(void)
 {
-    TickType_t  xReturn;
+    TickType_t xReturn;
     UBaseType_t uxHigherPriorityReadyTasks = pdFALSE;
 
     /* uxHigherPriorityReadyTasks takes care of the case where

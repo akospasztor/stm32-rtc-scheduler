@@ -32,11 +32,11 @@ TIM_HandleTypeDef htim17;
  */
 HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
 {
-    HAL_StatusTypeDef  result;
+    HAL_StatusTypeDef result;
     RCC_ClkInitTypeDef rccClockConfig = {0U};
-    uint32_t           clockFrequency = 0U;
-    uint32_t           clockPrescaler = 0U;
-    uint32_t           flashLatency;
+    uint32_t clockFrequency           = 0U;
+    uint32_t clockPrescaler           = 0U;
+    uint32_t flashLatency;
 
     /* Set the global tick interrupt priority variable */
     uwTickPrio = TickPriority;
