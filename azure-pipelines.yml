@@ -49,7 +49,7 @@ stages:
           - script: |
               pip install -r requirements.txt
             displayName: Install python dependencies
-          - script: editorconfig-checker
+          - script: ec
             displayName: Run editorconfig-checker
           - script: flake8
             displayName: Run flake8
