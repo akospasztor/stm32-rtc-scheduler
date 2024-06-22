@@ -86,6 +86,7 @@ sources += Glob('startup_stm32l496xx.s')
 
 # Create environment
 env = Environment(
+    tools=('as', 'ar', 'gcc', 'g++', 'gnulink'),
     ENV={'PATH': os.environ['PATH']}
 )
 
