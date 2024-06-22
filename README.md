@@ -240,6 +240,22 @@ note that the recommended usage is within a virtualenv.
 6. The `build` subfolder should contain the generated outputs, organized in
    subfolders with the names of the build configurations.
 
+#### Build with CMake
+
+Two configurations are supported with CMake: debug and release. CMake uses
+[Ninja](https://ninja-build.org) by default for all configurations. If you wish
+to generate Makefiles instead, just replace the `generator` value to
+`Unix Makefiles` in the `CMakePresets.json` file.
+
+Please make sure that both CMake and Ninja exist in the PATH. If the GNU Arm
+Embedded Toolchain does not exist in the PATH, it can be explicitly specified
+in the `cmake/gcc-arm-none-eabi.cmake` file.
+
+1. List all CMake configuration presets: `cmake --list-presets`
+2. Configure the debug preset: `cmake --preset=debug`
+3. Build the project with debug configuration: `cmake --build --preset=debug`
+4. Clean built files: `cmake --build --preset=debug --target clean`
+
 ## References
 
 [1] Discovery kit with STM32L496AG MCU,
