@@ -20,13 +20,23 @@ documentation of the source code.
 ![Build Status](https://dev.azure.com/akospasztor/stm32-rtc-scheduler/_apis/build/status/akospasztor.stm32-rtc-scheduler?branchName=master)
 
 ## Table of Contents
+
+- [Table of Contents](#table-of-contents)
 - [Scheduler Operation](#scheduler-operation)
 - [Example Application](#example-application)
+  - [Detailed Description](#detailed-description)
 - [Source Code Organization](#source-code-organization)
 - [Compile and Build](#compile-and-build)
+  - [IAR EWARM](#iar-ewarm)
+  - [Keil uVision](#keil-uvision)
+  - [GNU Arm Embedded Toolchain](#gnu-arm-embedded-toolchain)
+    - [Build with Make](#build-with-make)
+    - [Build with SCons](#build-with-scons)
+    - [Build with CMake](#build-with-cmake)
 - [References](#references)
 
 ## Scheduler Operation
+
 The RTC Scheduler uses the Real-Time Clock peripheral to implement an efficient
 scheduling mechanism. It has a configurable alarm feature that can be configured
 to generate an interrupt on a specific date, with sub-second precision.
@@ -56,6 +66,7 @@ else to do until the next wakeup, it can put the microcontroller again into an
 ultra-low power mode and wait for the next RTC alarm interrupt.
 
 ## Example Application
+
 The example application utilizes FreeRTOS as its real-time operating system and
 it has two demo tasks. The first task blinks the `LD3` LED on the discovery
 board twice with a 0.5 second period. The second task turns on the `LD2` LED for
@@ -70,7 +81,6 @@ to be executed by the RTOS, the microcontroller is put into the STOP2 ultra-low
 power mode, where it consumes less than 3 uA with the RTC enabled and running.
 
 ![STM32 RTC Scheduler](docs/img/stm32-rtc-scheduler.svg)
-
 _Figure 1: STM32 RTC Scheduler_
 
 ### Detailed Description
@@ -130,7 +140,8 @@ to be run, the idle task of the RTOS puts the microcontroller again into STOP2
 mode and waits for the next RTC alarm interrupt.
 
 ## Source Code Organization
-```
+
+```text
 Repository
 ├── docs
 ├── drivers
@@ -167,34 +178,40 @@ The `python` folder contains helper scripts and the `test` folder contains tests
 for the project.
 
 ## Compile and Build
+
 The project can be compiled and built out-of-the-box with IAR EWARM, Keil
 MDK-ARM and GNU Arm Embedded Toolchain. The IAR EWARM and Keil uVision projects
 are already configured with the required parameters and options in order to
 compile and build the application with a single click.
 
 ### IAR EWARM
+
 1. Open the `Project.eww` workspace file with IAR.
 2. Configure the debugger within the project options.
 3. Build the project and download to the target.
 
 ### Keil uVision
+
 1. Open the `stm32-rtc-scheduler.uvprojx` project file with uVision.
 2. Configure the debugger within the project options.
 3. Build the project and download to the target.
 
 ### GNU Arm Embedded Toolchain
+
 The `GCC` subfolder contains the compiler-specific files, a `Makefile` and a
 `SConscript` file to easily compile and build the project with the GNU Arm
 Embedded Toolchain.
 
 Prerequisites:
+
 - GNU Arm Embedded Toolchain, tested version: 8-2019-q3-update
 - At least one of the followings:
-    - GNU Make (for Windows, see:
-      [Make for Windows](http://gnuwin32.sourceforge.net/packages/make.htm))
-    - Python with pip
+  - GNU Make (for Windows, see:
+    [Make for Windows](http://gnuwin32.sourceforge.net/packages/make.htm))
+  - Python with pip
 
 #### Build with Make
+
 Steps to compile and build with GNU Make:
 
 1. If the GNU Arm Embedded Toolchain has not been added to PATH: Edit the
@@ -208,6 +225,7 @@ Steps to compile and build with GNU Make:
    `stm32-rtc-scheduler.hex` respectively.
 
 #### Build with SCons
+
 This project currently supports two build configurations: debug (default) and
 release. Follow these steps to compile and build the project with SCons. Please
 note that the recommended usage is within a virtualenv.
@@ -223,6 +241,7 @@ note that the recommended usage is within a virtualenv.
    subfolders with the names of the build configurations.
 
 ## References
+
 [1] Discovery kit with STM32L496AG MCU,
 https://www.st.com/en/evaluation-tools/32l496gdiscovery.html
 
