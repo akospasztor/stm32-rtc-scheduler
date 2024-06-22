@@ -22,6 +22,17 @@ stages:
           - script: |
               scons build --all -j8
             displayName: Build project with SCons
+      - job: gcc_cmake
+        container: akospasztor/docker-gcc-arm:8-2019-q3-linux-2.1.0
+        steps:
+          - script: |
+              cmake --preset debug
+              cmake --build --preset debug
+            displayName: Configure and build debug preset with CMake
+          - script: |
+              cmake --preset release
+              cmake --build --preset release
+            displayName: Configure and build release preset with CMake
       - job: doxygen
         container: akospasztor/docker-gcc-arm:8-2019-q3-linux-2.1.0
         steps:
