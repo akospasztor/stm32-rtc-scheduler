@@ -7,14 +7,14 @@ stages:
   - stage: Build
     jobs:
       - job: gcc_make
-        container: akospasztor/docker-gcc-arm:8-2019-q3-linux-1.0.1
+        container: akospasztor/docker-gcc-arm:8-2019-q3-linux-2.1.0
         steps:
           - script: |
               cd projects/GCC/
               make
             displayName: Build project with Make
       - job: gcc_scons
-        container: akospasztor/docker-gcc-arm:8-2019-q3-linux-1.0.1
+        container: akospasztor/docker-gcc-arm:8-2019-q3-linux-2.1.0
         steps:
           - script: |
               pip install -r requirements.txt
@@ -23,7 +23,7 @@ stages:
               scons build --all -j8
             displayName: Build project with SCons
       - job: doxygen
-        container: akospasztor/docker-gcc-arm:8-2019-q3-linux-1.0.1
+        container: akospasztor/docker-gcc-arm:8-2019-q3-linux-2.1.0
         steps:
           - script: doxygen docs/Doxyfile
             displayName: Run doxygen
@@ -36,7 +36,7 @@ stages:
   - stage: Test
     jobs:
       - job: format_check
-        container: akospasztor/docker-gcc-arm:8-2019-q3-linux-1.0.1
+        container: akospasztor/docker-gcc-arm:8-2019-q3-linux-2.1.0
         steps:
           - script: |
               pip install -r requirements.txt
@@ -44,7 +44,7 @@ stages:
           - script: pytest -s --executable=clang-format-11
             displayName: Run pytest
       - job: style_check
-        container: akospasztor/docker-gcc-arm:8-2019-q3-linux-1.0.1
+        container: akospasztor/docker-gcc-arm:8-2019-q3-linux-2.1.0
         steps:
           - script: |
               pip install -r requirements.txt
